@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MASUKE DRINKS — Distribuidora</title>
+  <style>
+    :root{
+      --bg:#0f1113; --card:#121416; --muted:#9aa0a6; --accent:#bfb8a7;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:linear-gradient(180deg, #0b0c0d 0%, #101214 100%); color:#e6e6e6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Watermark background using logo (replace assets/logo.png) */
+    .watermark{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background-image: url('assets/logo.png');
+      background-repeat:no-repeat; background-position:center; background-size:60vmin;
+      opacity:0.035; filter:grayscale(60%);
+    }
+
+    .container{position:relative; z-index:1; max-width:1200px; margin:30px auto; padding:24px}
+
+    header{display:flex; align-items:center; gap:18px}
+    .logo{
+      width:64px; height:64px; border-radius:10px; background:linear-gradient(135deg,#111 0%, #1b1b1b 100%);
+      display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .logo img{width:86%; height:86%; object-fit:contain}
+    .brand{display:flex; flex-direction:column}
+    .brand h1{margin:0; font-size:20px; letter-spacing:1px}
+    .brand p{margin:0; color:var(--muted); font-size:13px}
+
+    nav{margin-left:auto; display:flex; gap:12px; align-items:center}
+    .icon-btn{background:var(--glass); padding:10px 12px; border-radius:10px; display:inline-flex; gap:8px; align-items:center; color:var(--muted); text-decoration:none}
+    .icon-btn:hover{transform:translateY(-2px)}
+
+    main{margin-top:22px}
+    .hero{display:flex; gap:20px; align-items:center}
+    .hero .intro{flex:1}
+    .hero h2{margin:0 0 8px 0; font-size:28px}
+    .hero p{margin:0; color:var(--muted)}
+
+    /* Simple search & filter area */
+    .controls{display:flex; gap:10px; margin-top:18px; align-items:center}
+    .search{flex:1}
+    input[type=search]{width:100%; padding:12px 14px; border-radius:10px; background:#0d0f11; border:1px solid rgba(255,255,255,0.04); color:inherit}
+
+    /* Products grid */
+    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border-radius:12px; padding:12px; display:flex; flex-direction:column; gap:10px; border:1px solid rgba(255,255,255,0.03)}
+    .card img{width:100%; height:150px; border-radius:8px; object-fit:cover; background:linear-gradient(180deg,#111,#222)}
+    .card .title{display:flex; justify-content:space-between; align-items:center}
+    .card h3{margin:0; font-size:16px}
+    .price{font-weight:700}
+    .card .meta{color:var(--muted); font-size:13px}
+    .card .actions{display:flex; gap:8px; align-items:center}
+    .btn{padding:8px 12px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:inherit; cursor:pointer}
+    .btn.primary{background:#e6e6e6; color:#111; border:none}
+
+    /* Floating cart */
+    .cart-btn{position:fixed; right:20px; bottom:20px; background:linear-gradient(135deg,#202024,#151617); padding:12px 14px; border-radius:14px; box-shadow:0 8px 30px rgba(0,0,0,0.6); z-index:5; display:flex; gap:10px; align-items:center}
+    .cart-count{background:#cf3f3f; color:#fff; padding:4px 8px; border-radius:999px; font-weight:700}
+
+    /* Cart panel */
+    .cart-panel{position:fixed; right:20px; bottom:80px; width:340px; max-height:70vh; overflow:auto; background:var(--card); border-radius:12px; padding:14px; box-shadow:0 12px 40px rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.03); z-index:6; display:none}
+    .cart-panel.open{display:block}
+    .cart-item{display:flex; gap:10px; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .cart-item img{width:56px; height:56px; object-fit:cover; border-radius:8px}
+    .qty{display:flex; gap:6px; align-items:center}
+    .small{font-size:13px; color:var(--muted)}
+    .total{display:flex; justify-content:space-between; margin-top:12px; font-weight:700}
+
+    footer{margin-top:40px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; gap:10px}
+
+    @media(max-width:600px){ .hero{flex-direction:column; align-items:flex-start} .cart-panel{right:10px; left:10px; width:auto} }
+  </style>
+</head>
+<body>
+  <div class="watermark" aria-hidden="true"></div>
+  <div class="container">
+    <header>
+      <div class="logo" title="MASUKE DRINKS — logo">
+        <!-- Replace assets/logo-small.png with your logo (square). -->
+        <img src="assets/logo-small.png" alt="Masuke Drinks logo" onerror="this.style.display='none'">
+      </div>
+      <div class="brand">
+        <h1>MASUKE DRINKS</h1>
+        <p>Distribuidora • Entregas rápidas • Atendimento via WhatsApp</p>
+      </div>
+
+      <nav>
+        <a class="icon-btn" href="https://instagram.com/masukedrinks" target="_blank" rel="noopener">Instagram @masukedrinks</a>
+        <a class="icon-btn" href="#" id="open-cart">Carrinho <span id="cartBadge" class="cart-count" style="margin-left:8px; display:none">0</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="intro">
+          <h2>O melhor para sua festa e seu comércio</h2>
+          <p>Selecione, adicione ao carrinho e finalize pelo WhatsApp. Entregamos qualidade e preço justo.</p>
+
+          <div class="controls">
+            <div class="search"><input id="search" type="search" placeholder="Buscar bebida, marca ou código"></div>
+            <div><button class="btn" id="clearSearch">Limpar</button></div>
+          </div>
+        </div>
+        <div style="min-width:180px; text-align:right">
+          <p class="small">WhatsApp:</p>
+          <p><strong>+55 34 99882-9396</strong></p>
+        </div>
+      </section>
+
+      <section class="grid" id="products"></section>
+
+      <footer>
+        <div>© <span id="year"></span> MASUKE DRINKS</div>
+        <div>Endereço: Av. Indaiá, 685 - Planalto • <a href="https://instagram.com/masukedrinks" target="_blank">@masukedrinks</a></div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Floating cart button -->
+  <button class="cart-btn" id="toggleCart" aria-label="Abrir carrinho">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.45c-.16.29-.25.63-.25.96 0 1.1.9 2 2 2h9v-2h-9l1.1-2h6.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49a1 1 0 0 0-.9-1.48H7z" fill="currentColor"/></svg>
+    <span id="cartSummary">Ver carrinho</span>
+  </button>
+
+  <div class="cart-panel" id="cartPanel" role="dialog" aria-label="Carrinho de compras">
+    <h3>Carrinho</h3>
+    <div id="cartItems"></div>
+    <div class="total"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+    <div style="margin-top:12px; display:flex; gap:8px">
+      <button class="btn" id="clearCart">Limpar</button>
+      <button class="btn primary" id="checkout">Finalizar pelo WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    // === CONFIGURAÇÕES ===
+    const WHATSAPP_NUMBER = '5534998829396'; // +55 34 99882-9396 -> em formato internacional sem +
+    const INSTAGRAM = 'https://instagram.com/masukedrinks';
+
+    // --- PRODUTOS: substitua ou expanda com seus itens reais. Cada item deve ter id, nome, price (number), img (substituir arquivo em assets/) ---
+    const productsData = [
+      {id:1, name:'Coca-Cola 350ml', price:3.99, img:'assets/coca350.jpg'},
+      {id:2, name:'Guaraná Mineiro 269ml', price:3.00, img:'assets/guarana269.jpg'},
+      {id:3, name:'Extrapower 270ml', price:6.99, img:'assets/extrapower270.jpg'},
+      {id:4, name:'Jack Daniels 375ml', price:39.90, img:'assets/jack375.jpg'},
+      {id:5, name:'Heineken Lata 350ml', price:5.99, img:'assets/heineken350.jpg'},
+      {id:6, name:'Água Mineral 500ml', price:2.50, img:'assets/agua500.jpg'}
+    ];
+
+    // === RENDERIZAÇÃO ===
+    const productsEl = document.getElementById('products');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartBadge = document.getElementById('cartBadge');
+    const yearEl = document.getElementById('year');
+
+    yearEl.textContent = new Date().getFullYear();
+
+    let cart = {};
+
+    function moneyBRL(v){ return 'R$ ' + v.toFixed(2).replace('.',','); }
+
+    function renderProducts(list){
+      productsEl.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('article'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.name}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%23101416\'/><text x=\'50%\' y=\'50%\' font-size=\'20\' fill=\'%23bdbdbd\' text-anchor=\'middle\' dominant-baseline=\'middle\'>Imagem\+disponível\+em\+assets/</text></svg>'">
+          <div class="title"><h3>${p.name}</h3><div class="price">${moneyBRL(p.price)}</div></div>
+          <div class="meta">SKU: ${p.id} •  Disponível</div>
+          <div class="actions">
+            <div style="flex:1">
+              <label class="small">Quantidade</label>
+              <select data-id="${p.id}" style="width:100%; padding:8px; border-radius:8px; margin-top:6px; background:#0d0f11; color:inherit; border:1px solid rgba(255,255,255,0.03)">
+                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+              </select>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <button class="btn" data-id="${p.id}" aria-label="Adicionar ao carrinho">Adicionar</button>
+              <button class="btn primary" data-buy="${p.id}">Comprar</button>
+            </div>
+          </div>
+        `;
+        productsEl.appendChild(card);
+      });
+
+      // attach events
+      document.querySelectorAll('[data-id]').forEach(el => {
+        if(el.tagName === 'BUTTON'){
+          el.addEventListener('click', e => addToCart(Number(e.currentTarget.dataset.id)));
+        }
+      });
+
+      document.querySelectorAll('[data-buy]').forEach(el => {
+        el.addEventListener('click', e => buyNow(Number(e.currentTarget.dataset.buy)));
+      });
+    }
+
+    renderProducts(productsData);
+
+    // === BUSCA ===
+    document.getElementById('search').addEventListener('input', function(e){
+      const q = e.target.value.trim().toLowerCase();
+      const filtered = productsData.filter(p => p.name.toLowerCase().includes(q) || String(p.id)===q);
+      renderProducts(filtered);
+    });
+    document.getElementById('clearSearch').addEventListener('click', ()=>{document.getElementById('search').value=''; renderProducts(productsData)});
+
+    // === CARRINHO ===
+    function addToCart(id){
+      const select = document.querySelector(`select[data-id='${id}']`);
+      const qty = select ? Number(select.value) : 1;
+      const prod = productsData.find(p=>p.id===id);
+      if(!prod) return;
+      if(cart[id]) cart[id].qty += qty; else cart[id] = { ...prod, qty };
+      saveCart();
+      updateCartBadge();
+      renderCart();
+    }
+
+    function buyNow(id){
+      // Add single item and open whatsapp checkout
+      const prod = productsData.find(p=>p.id===id);
+      if(!prod) return;
+      const message = `Pedido%0A- ${encodeURIComponent(prod.name)} x1 - ${moneyBRL(prod.price)}%0A%0ATotal: ${encodeURIComponent(moneyBRL(prod.price))}%0A%0ANome:%20%0AEndereço:%20%0ATelefone:%20`;
+      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${message}`;
+      window.open(url,'_blank');
+    }
+
+    function renderCart(){
+      cartItemsEl.innerHTML = '';
+      const ids = Object.keys(cart);
+      if(ids.length===0){ cartItemsEl.innerHTML = '<p class="small">Seu carrinho está vazio.</p>'; cartTotalEl.textContent = moneyBRL(0); return; }
+      let total = 0;
+      ids.forEach(k => {
+        const it = cart[k]; total += it.price * it.qty;
+        const div = document.createElement('div'); div.className='cart-item';
+        div.innerHTML = `
+          <img src="${it.img}" alt="${it.name}" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%23101416\\'/><text x=\\'50%\\' y=\\'50%\\' font-size=\\'14\\' fill=\\'%23bdbdbd\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Sem\+imagem</text></svg>'">
+          <div style="flex:1">
+            <div style="display:flex; justify-content:space-between"><strong>${it.name}</strong><span>${moneyBRL(it.price)}</span></div>
+            <div class="small">Quantidade: <span class="small">${it.qty}</span></div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px">
+            <button class="btn" onclick="changeQty(${it.id}, -1)">-</button>
+            <button class="btn" onclick="changeQty(${it.id}, 1)">+</button>
+            <button class="btn" onclick="removeItem(${it.id})">Remover</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(div);
+      });
+      cartTotalEl.textContent = moneyBRL(total);
+    }
+
+    window.changeQty = function(id, delta){
+      if(!cart[id]) return; cart[id].qty += delta; if(cart[id].qty<1) delete cart[id]; saveCart(); updateCartBadge(); renderCart();
+    }
+    window.removeItem = function(id){ delete cart[id]; saveCart(); updateCartBadge(); renderCart(); }
+
+    document.getElementById('toggleCart').addEventListener('click', ()=>{ cartPanel.classList.toggle('open'); });
+    document.getElementById('open-cart').addEventListener('click', ()=>{ cartPanel.classList.add('open'); });
+    document.getElementById('clearCart').addEventListener('click', ()=>{ if(confirm('Limpar o carrinho?')){ cart = {}; saveCart(); renderCart(); updateCartBadge(); } });
+
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      const items = Object.values(cart);
+      if(items.length===0){ alert('Adicione pelo menos um item ao carrinho.'); return; }
+      let total = 0; let lines = [];
+      items.forEach(it => { total += it.price*it.qty; lines.push(`- ${it.name} x${it.qty} = ${moneyBRL(it.price*it.qty)}`); });
+      const text = `*Novo pedido*%0A${lines.join('%0A')}%0A%0A*Total:* ${encodeURIComponent(moneyBRL(total))}%0A%0A*Nome:*%20%0A*Endereço:*%20%0A*Telefone:*%20`;
+      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${text}`;
+      window.open(url,'_blank');
+    });
+
+    // persistência simples
+    function saveCart(){ localStorage.setItem('masuke_cart', JSON.stringify(cart)); }
+    function loadCart(){ const raw = localStorage.getItem('masuke_cart'); if(raw) try{ cart = JSON.parse(raw); }catch(e){ cart = {} } }
+    function updateCartBadge(){ const count = Object.values(cart).reduce((s,i)=>s+i.qty,0); if(count>0){ cartBadge.style.display='inline-block'; cartBadge.textContent = count; } else cartBadge.style.display='none'; document.getElementById('cartSummary').textContent = count? `${count} item(s)` : 'Ver carrinho'; }
+
+    loadCart(); renderCart(); updateCartBadge();
+
+    // Accessibility: close cart with Escape
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') cartPanel.classList.remove('open'); });
+  </script>
+</body>
+</html>
