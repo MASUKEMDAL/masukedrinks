@@ -6,20 +6,22 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #64748b;
-    --accent-color: #f59e0b;
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-card: #334155;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --border-color: #475569;
+    --primary-color: #d4af37;
+    --secondary-color: #2a2a2a;
+    --accent-color: #d4af37;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --border-color: #404040;
     --success-color: #10b981;
     --danger-color: #ef4444;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    --whatsapp-color: #25d366;
+    --instagram-gradient: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
 }
 
 body {
@@ -39,7 +41,7 @@ body {
     transform: translate(-50%, -50%);
     width: 60vw;
     height: 60vh;
-    background-image: url('assets/logo.png');
+    background-image: url('public/images/Logo.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -56,7 +58,7 @@ body {
 
 /* Header */
 .header {
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     position: sticky;
@@ -80,12 +82,20 @@ body {
 .logo {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--bg-card), var(--secondary-color));
+    border: 2px solid var(--primary-color);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
 }
 
 .logo img {
@@ -98,7 +108,7 @@ body {
 .brand-info h1 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--primary-color);
     letter-spacing: 0.5px;
 }
 
@@ -118,18 +128,35 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: var(--bg-card);
     color: var(--text-secondary);
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s ease;
     border: 1px solid var(--border-color);
+    font-weight: 500;
 }
 
-.nav-link:hover {
-    background: var(--primary-color);
+.nav-link.instagram {
+    background: var(--instagram-gradient);
     color: white;
+    border: none;
+}
+
+.nav-link.instagram:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(188, 24, 136, 0.3);
+}
+
+.nav-link.whatsapp {
+    background: var(--whatsapp-color);
+    color: white;
+    border: none;
+}
+
+.nav-link.whatsapp:hover {
+    background: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
 }
 
 .cart-btn {
@@ -137,19 +164,20 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: var(--accent-color);
-    color: white;
+    background: var(--primary-color);
+    color: var(--bg-primary);
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.3s ease;
     position: relative;
 }
 
 .cart-btn:hover {
-    background: #d97706;
+    background: #b8941f;
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 
 .cart-count {
@@ -171,7 +199,7 @@ body {
 /* Hero Section */
 .hero {
     padding: 4rem 0;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(42, 42, 42, 0.1) 100%);
 }
 
 .hero-content {
@@ -185,7 +213,7 @@ body {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--text-primary), var(--accent-color));
+    background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -201,6 +229,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -219,11 +248,11 @@ body {
 
 .btn-primary {
     background: var(--primary-color);
-    color: white;
+    color: var(--bg-primary);
 }
 
 .btn-primary:hover {
-    background: #1d4ed8;
+    background: #b8941f;
     transform: translateY(-2px);
     box-shadow: var(--shadow);
 }
@@ -238,6 +267,29 @@ body {
     background: var(--border-color);
 }
 
+.btn-whatsapp {
+    background: var(--whatsapp-color);
+    color: white;
+}
+
+.btn-whatsapp:hover {
+    background: #128c7e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+.btn-cardapio {
+    background: var(--bg-card);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-cardapio:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
 .contact-info {
     color: var(--text-secondary);
     font-weight: 500;
@@ -249,6 +301,13 @@ body {
     object-fit: cover;
     border-radius: 16px;
     box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.3);
 }
 
 /* Search Section */
@@ -268,7 +327,7 @@ body {
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    color: var(--primary-color);
 }
 
 .search-bar input {
@@ -284,7 +343,7 @@ body {
 .search-bar input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
 .filters {
@@ -307,7 +366,7 @@ body {
 .filter-btn:hover,
 .filter-btn.active {
     background: var(--primary-color);
-    color: white;
+    color: var(--bg-primary);
     border-color: var(--primary-color);
 }
 
@@ -320,7 +379,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: var(--text-primary);
+    color: var(--primary-color);
 }
 
 .products-grid {
@@ -341,6 +400,7 @@ body {
 .product-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
 }
 
 .product-image {
@@ -348,6 +408,15 @@ body {
     height: 250px;
     object-fit: cover;
     background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+    transition: all 0.3s ease;
+}
+
+.clickable-image {
+    cursor: pointer;
+}
+
+.clickable-image:hover {
+    transform: scale(1.05);
 }
 
 .product-info {
@@ -370,7 +439,7 @@ body {
 .product-price {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
 
@@ -391,17 +460,19 @@ body {
     height: 32px;
     border: 1px solid var(--border-color);
     background: var(--bg-secondary);
-    color: var(--text-primary);
+    color: var(--primary-color);
     border-radius: 6px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .quantity-btn:hover {
     background: var(--primary-color);
+    color: var(--bg-primary);
     border-color: var(--primary-color);
 }
 
@@ -409,6 +480,7 @@ body {
     min-width: 40px;
     text-align: center;
     font-weight: 500;
+    color: var(--primary-color);
 }
 
 .add-to-cart {
@@ -424,6 +496,25 @@ body {
 
 .add-to-cart:hover {
     background: #059669;
+    transform: translateY(-2px);
+}
+
+/* Modais */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
 }
 
 /* Cart Modal */
@@ -453,6 +544,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    border: 2px solid var(--primary-color);
 }
 
 .cart-header {
@@ -461,11 +553,12 @@ body {
     align-items: center;
     padding: 1.5rem;
     border-bottom: 1px solid var(--border-color);
+    background: var(--bg-card);
 }
 
 .cart-header h3 {
     font-size: 1.5rem;
-    color: var(--text-primary);
+    color: var(--primary-color);
 }
 
 .close-btn {
@@ -480,7 +573,7 @@ body {
 
 .close-btn:hover {
     background: var(--bg-card);
-    color: var(--text-primary);
+    color: var(--primary-color);
 }
 
 .cart-items {
@@ -497,6 +590,7 @@ body {
     background: var(--bg-card);
     border-radius: 12px;
     margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
 }
 
 .cart-item-image {
@@ -504,6 +598,12 @@ body {
     height: 80px;
     object-fit: cover;
     border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cart-item-image:hover {
+    transform: scale(1.1);
 }
 
 .cart-item-info {
@@ -517,7 +617,7 @@ body {
 }
 
 .cart-item-price {
-    color: var(--accent-color);
+    color: var(--primary-color);
     font-weight: 500;
 }
 
@@ -544,13 +644,15 @@ body {
 .cart-footer {
     padding: 1.5rem;
     border-top: 1px solid var(--border-color);
+    background: var(--bg-card);
 }
 
 .cart-total {
     font-size: 1.25rem;
     margin-bottom: 1rem;
     text-align: center;
-    color: var(--text-primary);
+    color: var(--primary-color);
+    font-weight: 700;
 }
 
 .cart-actions {
@@ -569,6 +671,86 @@ body {
     color: var(--text-muted);
 }
 
+/* Image Modal */
+.image-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+}
+
+.close-image-btn {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.close-image-btn:hover {
+    background: #b8941f;
+    transform: scale(1.1);
+}
+
+/* Cardapio Modal */
+.cardapio-content {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--primary-color);
+}
+
+.cardapio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-card);
+}
+
+.cardapio-header h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.cardapio-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.cardapio-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
 /* Footer */
 .footer {
     background: var(--bg-primary);
@@ -585,7 +767,7 @@ body {
 }
 
 .footer-section h4 {
-    color: var(--text-primary);
+    color: var(--primary-color);
     margin-bottom: 1rem;
     font-size: 1.1rem;
 }
@@ -621,6 +803,7 @@ body {
     .nav {
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
     }
     
     .products-grid {
@@ -640,6 +823,16 @@ body {
     
     .cart-actions {
         flex-direction: column;
+    }
+    
+    .image-modal-content {
+        max-width: 95vw;
+        max-height: 85vh;
+    }
+    
+    .cardapio-content {
+        width: 95%;
+        max-height: 85vh;
     }
 }
 
@@ -688,10 +881,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: var(--primary-color);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
+    background: #b8941f;
 }

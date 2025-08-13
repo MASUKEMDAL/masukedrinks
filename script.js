@@ -1,88 +1,67 @@
-// Dados dos produtos
+// Dados dos produtos baseados nas imagens disponíveis
 const products = [
     {
         id: 1,
-        name: "Coca-Cola 350ml",
-        category: "refrigerantes",
-        price: 4.50,
-        image: "https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 2,
-        name: "Pepsi 350ml",
-        category: "refrigerantes",
-        price: 4.00,
-        image: "https://images.pexels.com/photos/2775860/pexels-photo-2775860.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 3,
-        name: "Guaraná Antarctica 350ml",
-        category: "refrigerantes",
-        price: 4.20,
-        image: "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 4,
         name: "Heineken 350ml",
         category: "cervejas",
         price: 6.50,
-        image: "https://images.pexels.com/photos/1552630/pexels-photo-1552630.jpeg?auto=compress&cs=tinysrgb&w=400"
+        image: "public/images/Heineken.jpg"
+    },
+    {
+        id: 2,
+        name: "Budweiser 350ml",
+        category: "cervejas",
+        price: 5.90,
+        image: "public/images/BudWeiser.jpg"
+    },
+    {
+        id: 3,
+        name: "Sol 350ml",
+        category: "cervejas",
+        price: 4.50,
+        image: "public/images/Sol.jpg"
+    },
+    {
+        id: 4,
+        name: "Spaten 350ml",
+        category: "cervejas",
+        price: 5.20,
+        image: "public/images/Spaten.jpg"
     },
     {
         id: 5,
-        name: "Skol 350ml",
+        name: "Império 350ml",
         category: "cervejas",
-        price: 3.80,
-        image: "https://images.pexels.com/photos/1267696/pexels-photo-1267696.jpeg?auto=compress&cs=tinysrgb&w=400"
+        price: 4.80,
+        image: "public/images/Imperio.jpg"
     },
     {
         id: 6,
-        name: "Brahma 350ml",
-        category: "cervejas",
-        price: 4.00,
-        image: "https://images.pexels.com/photos/1552630/pexels-photo-1552630.jpeg?auto=compress&cs=tinysrgb&w=400"
+        name: "Red Label 1L",
+        category: "destilados",
+        price: 89.90,
+        image: "public/images/RedLabel.jpg"
     },
     {
         id: 7,
-        name: "Red Bull 250ml",
-        category: "energeticos",
-        price: 8.90,
-        image: "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=400"
+        name: "White Horse 1L",
+        category: "destilados",
+        price: 75.90,
+        image: "public/images/WhiteHorse.jpg"
     },
     {
         id: 8,
-        name: "Monster Energy 473ml",
-        category: "energeticos",
-        price: 9.50,
-        image: "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=400"
+        name: "Copão Gelado",
+        category: "cervejas",
+        price: 8.50,
+        image: "public/images/Copão.jpg"
     },
     {
         id: 9,
-        name: "Água Crystal 500ml",
-        category: "aguas",
-        price: 2.50,
-        image: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 10,
-        name: "Água com Gás 500ml",
-        category: "aguas",
-        price: 3.00,
-        image: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 11,
-        name: "Vodka Smirnoff 1L",
-        category: "destilados",
-        price: 45.90,
-        image: "https://images.pexels.com/photos/602750/pexels-photo-602750.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-        id: 12,
-        name: "Whisky Jack Daniels 1L",
-        category: "destilados",
-        price: 89.90,
-        image: "https://images.pexels.com/photos/602750/pexels-photo-602750.jpeg?auto=compress&cs=tinysrgb&w=400"
+        name: "Barrigudinhas",
+        category: "cervejas",
+        price: 12.90,
+        image: "public/images/Barrigudinhas.jpg"
     }
 ];
 
@@ -103,6 +82,12 @@ const clearCart = document.getElementById('clearCart');
 const checkoutBtn = document.getElementById('checkoutBtn');
 const searchInput = document.getElementById('searchInput');
 const filterBtns = document.querySelectorAll('.filter-btn');
+const imageModal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const closeImageModal = document.getElementById('closeImageModal');
+const cardapioBtn = document.getElementById('cardapioBtn');
+const cardapioModal = document.getElementById('cardapioModal');
+const closeCardapioModal = document.getElementById('closeCardapioModal');
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
@@ -127,19 +112,73 @@ function setupEventListeners() {
         btn.addEventListener('click', handleFilter);
     });
     
-    // Fechar modal clicando fora
+    // Modal de imagem
+    closeImageModal.addEventListener('click', closeImageModalFunc);
+    imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal) {
+            closeImageModalFunc();
+        }
+    });
+    
+    // Modal do cardápio
+    cardapioBtn.addEventListener('click', openCardapioModal);
+    closeCardapioModal.addEventListener('click', closeCardapioModalFunc);
+    cardapioModal.addEventListener('click', function(e) {
+        if (e.target === cardapioModal) {
+            closeCardapioModalFunc();
+        }
+    });
+    
+    // Logo modal
+    document.querySelector('.logo').addEventListener('click', function() {
+        openImageModal('public/images/Logo.jpg', 'MASUKE DRINKS Logo');
+    });
+    
+    // Fechar modais clicando fora
     cartModal.addEventListener('click', function(e) {
         if (e.target === cartModal) {
             closeCartModal();
         }
     });
     
-    // Fechar modal com ESC
+    // Fechar modais com ESC
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && cartModal.classList.contains('active')) {
-            closeCartModal();
+        if (e.key === 'Escape') {
+            if (cartModal.classList.contains('active')) {
+                closeCartModal();
+            }
+            if (imageModal.classList.contains('active')) {
+                closeImageModalFunc();
+            }
+            if (cardapioModal.classList.contains('active')) {
+                closeCardapioModalFunc();
+            }
         }
     });
+}
+
+// Funções do modal de imagem
+function openImageModal(imageSrc, imageAlt) {
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+    imageModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModalFunc() {
+    imageModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Funções do modal do cardápio
+function openCardapioModal() {
+    cardapioModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCardapioModalFunc() {
+    cardapioModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
 }
 
 // Renderizar produtos
@@ -174,8 +213,9 @@ function createProductCard(product) {
     card.className = 'product-card';
     
     card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="product-image" 
-             onerror="this.src='https://via.placeholder.com/300x250/334155/cbd5e1?text=Imagem+Indisponível'">
+        <img src="${product.image}" alt="${product.name}" class="product-image clickable-image" 
+             onclick="openImageModal('${product.image}', '${product.name}')"
+             onerror="this.src='https://via.placeholder.com/300x250/1a1a1a/d4af37?text=Imagem+Indisponível'">
         <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-category">${getCategoryName(product.category)}</p>
@@ -313,8 +353,9 @@ function renderCartItems() {
         cartItem.className = 'cart-item';
         
         cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image"
-                 onerror="this.src='https://via.placeholder.com/80x80/334155/cbd5e1?text=Img'">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image clickable-image"
+                 onclick="openImageModal('${item.image}', '${item.name}')"
+                 onerror="this.src='https://via.placeholder.com/80x80/1a1a1a/d4af37?text=Img'">
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
                 <div class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
